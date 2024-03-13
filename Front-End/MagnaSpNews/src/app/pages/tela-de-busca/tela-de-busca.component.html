@@ -1,0 +1,50 @@
+<app-cabecalho [titulo]="parametroBusca != 'categoria' ? 'MagnaSp News' : parametroEscolhido"></app-cabecalho>
+<section class="tela__busca">
+  <div class="descricao__busca" *ngIf="parametroBusca == 'portal'">
+    <p>
+      O conteúdo de todas as notícias abaixo é obtido diretamente do site do
+    </p>
+    <a href="{{ linkPortal }}">{{ linkResumido }}</a>
+  </div>
+  <div class="descricao__busca" *ngIf="parametroBusca == 'palavra' || parametroBusca == 'tag'">
+    <p>Você buscou por</p>
+    <p class="termo__buscado">{{ parametroEscolhido }}</p>
+  </div>
+  <div class="espaco__filtro">
+    <div class="ver__filtro__selecionado">{{filtroSelecionado}}</div>
+    <div class="botao__filtros">
+      <input type="checkbox" id="filtro" [(ngModel)]="mostrarFiltros" />
+      <label for="filtro">Filtrar Por</label>
+      <label for="filtro" class="icone__mostrar__filtros"></label>
+      <div *ngIf="mostrarFiltros" class="opcoes__filtro">
+        <ul>
+          <li class="filtro" *ngFor="let filtro of filtros" (click)="selecionarFiltro(filtro); mostrarFiltros = false"
+            [ngClass]="{filtro__selecionado : filtro == filtroSelecionado }">
+            {{ filtro }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="espaco__loading" *ngIf="loadingInicial">
+    <div class="icone__loading__principal"></div>
+  </div>
+  <div class="cards" *ngIf="resultadoBusca.length > 0">
+    <div class="resultado__busca">
+      <app-previa-noticia *ngFor="let previa of resultadoBusca" [previa]="previa"></app-previa-noticia>
+    </div>
+    <div class="icone__loading" *ngIf="loading"></div>
+    <div class="nao__ha__conteudo" *ngIf="!possuiMaisNoticias">Infelizmente Acabou!</div>
+    <button class="botao__ver__mais" *ngIf="possuiMaisNoticias" (click)="carregarMaisNoticias()">Ver Mais</button>
+  </div>
+  <div class="sem__resposta" *ngIf="resultadoBusca.length == 0 && !loadingInicial && !tentarNovamente">
+    <div class="icone__nao__encontrado"></div>
+    <div class="sem__resposta__mensagem">Não há resultados para sua busca.</div>
+  </div>
+  <div class="espaco__tempo__excedido" *ngIf="tentarNovamente">
+    <p class="mensagem__tempo__excedido">Oops! Parece que algo deu errado e a solicitação demorou demais para ser
+      concluída.</p>
+    <p class="mensagem__tempo__excedido">Por favor, verifique sua conexão com a Internet e tente novamente.</p>
+    <button class="botao__tentar__novamente" (click)="recarregar()">Tentar Novamente</button>
+  </div>
+</section>

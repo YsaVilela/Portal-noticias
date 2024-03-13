@@ -1,0 +1,53 @@
+import { ErrorHandler, NgModule } from '@angular/core';
+import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BarraNavegacaoComponent } from './componentes/barra-navegacao/barra-navegacao.component';
+import { CabecalhoComponent } from './componentes/cabecalho/cabecalho.component';
+import { RodapeComponent } from './componentes/rodape/rodape.component';
+import { PreviaNoticiaComponent } from './componentes/previa-noticia/previa-noticia.component';
+import { CarrosselNoticiasComponent } from './componentes/carrossel-noticias/carrossel-noticias.component';
+import { PrincipaisNoticiasComponent } from './componentes/principais-noticias/principais-noticias.component';
+import { TelaInicioComponent } from './pages/tela-inicio/tela-inicio.component';
+import { ConteudoNoticiaComponent } from './pages/tela-noticia/conteudo-noticia.component';
+import { TelaDeBuscaComponent } from './pages/tela-de-busca/tela-de-busca.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TelaNotFoundComponent } from './pages/tela-not-found/tela-not-found.component';
+import { LimitarCaracteresPipe } from './core/pipes/limitar-caracteres.pipe';
+import { MyHammerConfig } from './hammer-config';
+import { MenuHamburguerComponent } from './componentes/menu-hamburguer/menu-hamburguer.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SobreNosComponent } from './pages/sobre-nos/sobre-nos.component';
+import { CustomErrorHandler } from './error-handler';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    BarraNavegacaoComponent,
+    CabecalhoComponent,
+    RodapeComponent,
+    PreviaNoticiaComponent,
+    CarrosselNoticiasComponent,
+    PrincipaisNoticiasComponent,
+    TelaInicioComponent,
+    ConteudoNoticiaComponent,
+    TelaDeBuscaComponent,
+    TelaNotFoundComponent,
+    LimitarCaracteresPipe,
+    MenuHamburguerComponent,
+    SobreNosComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HammerModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
+  exports: [LimitarCaracteresPipe],
+  providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig }, { provide: ErrorHandler, useClass: CustomErrorHandler }],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

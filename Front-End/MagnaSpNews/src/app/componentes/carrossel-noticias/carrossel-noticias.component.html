@@ -1,0 +1,24 @@
+<div class="carrossel_noticias">
+  <h2 class="titulo__carrossel" (click)="redirecionarCategoria()">{{ tituloCarrosel }}</h2>
+  <div class="carrosel">
+    <button (click)="voltarNoticia()" class="anterior">
+      <div class="icone__anterior"></div>
+    </button>
+    <div class="conteudo__noticia" (click)="exibirNoticia()" (swipeleft)="proximaNoticia()"
+      (swiperight)="voltarNoticia()">
+      <div class="imagem__capa__carrosel" [innerHTML]="imagemCapaInjetavel"></div>
+      <div class="degrade-bottom"></div>
+      <p class="titulo__noticia__carrossel" *ngIf="previaAtual">
+        {{ previaAtual.titulo }}
+      </p>
+    </div>
+    <button (click)="proximaNoticia()" class="proximo">
+      <div class="icone__proximo"></div>
+    </button>
+  </div>
+  <div class="indice__carrossel">
+    <div *ngFor="let bolinha of indiceCarrossel; let i = index" class="bolinha" [ngClass]="{
+        bolinha__selecionada: previas.indexOf(this.previaAtual) === i
+      }" (click)="selecionarNoticia(i)"></div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<app-cabecalho [titulo]="noticia.categoria ? noticia.categoria : 'MagnaSp News'"></app-cabecalho>
+<section class="pagina__noticia">
+  <div class="espaco__loading" *ngIf="loadingInicial">
+    <div class="icone__loading__principal"></div>
+  </div>
+  <article class="noticia" *ngIf="noticiaEncontrada">
+    <h1 class="titulo__noticia">{{ noticia.titulo }}</h1>
+    <p class="sinopse" *ngIf="noticia.sinopse">{{ noticia.sinopse }}</p>
+    <div class="dados__noticia">
+      <p class="autoria" [innerHTML]="autoriaInjetavel"></p>
+      <div class="dados__publicacao">
+        <p class="data__publicacao">Publicado em {{ noticia.dataPublicacao | date : 'dd/MM/yyyy \'às\' HH:mm'}}</p>
+        <p class="data__modificacao" *ngIf="noticia.dataModificada">| Atualizado em {{ noticia.dataModificada | date : 'dd/MM/yyyy \'às\' HH:mm'}}</p>
+      </div>
+    </div>
+    <div class="conteudo__noticia" [innerHTML]="conteudoInjetavel"></div>
+    <div class="espaco__tags" *ngIf="noticia.tags.length > 0">
+      <div class="espaco__titulo">
+        <div class="icone__tags"></div>
+        <h2 class="titulo__tags">TAGS</h2>
+      </div>
+      <ul class="tag__list">
+        <li class="tag__item" *ngFor="let tag of noticia.tags" (click)="redirecionarTelaDeBuscaPorTag(tag.nome)">
+          {{ tag.nome }}
+        </li>
+      </ul>
+    </div>
+    <div class="espaco__link__noticia__oficial" *ngIf="noticia.linkDaNoticiaOficial">
+      <p>Você pode encontrar a matéria oficial em</p>
+      <a href="{{ noticia.linkDaNoticiaOficial }}">{{
+        linkPortal
+      }}</a>
+    </div>
+  </article>
+  <div class="noticias__relacionadas" *ngIf="noticiasRelacionadas.length > 0">
+    <h2 class="titulo__noticias__relacionadas">Notícias Relacionadas</h2>
+    <div class="resultado__busca">
+      <app-previa-noticia *ngFor="let previa of noticiasRelacionadas" [previa]="previa"></app-previa-noticia>
+    </div>
+    <div class="icone__loading" *ngIf="loading"></div>
+    <div class="nao__ha__conteudo" *ngIf="!possuiMaisNoticias">Infelizmente Acabou!</div>
+    <button class="botao__ver__mais" *ngIf="possuiMaisNoticias && !tentarNovamentePrevias" (click)="carregarMaisNoticias()">Ver Mais</button>
+  </div>
+  <div class="espaco__tempo__excedido" [ngClass]="{espaco__tempo__excedido__previas : tentarNovamentePrevias}" *ngIf="tentarNovamenteNoticia || tentarNovamentePrevias">
+    <p class="mensagem__tempo__excedido">Oops! Parece que algo deu errado e a solicitação demorou demais para ser
+      concluída.</p>
+    <p class="mensagem__tempo__excedido">Por favor, verifique sua conexão com a Internet e tente novamente.</p>
+    <button class="botao__tentar__novamente" (click)="tentarNovamenteNoticia ? recarregarNoticia() : recarregarPrevias()">Tentar Novamente</button>
+  </div>
+</section>

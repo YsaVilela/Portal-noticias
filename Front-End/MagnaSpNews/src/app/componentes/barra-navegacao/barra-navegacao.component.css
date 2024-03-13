@@ -1,0 +1,49 @@
+.barra__navegacao{
+  background-color: var(--cor-fundo);
+  display: grid;
+  font-family: var(--fonte-padrao-portal);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  grid-template-areas: ". filtros . contratarAssinatura login .";
+  grid-template-columns: 10px 350px auto 125px 125px 10px;
+  height: 50px;
+  width: 100%;
+}
+
+.filtro__sites{
+  align-items: center;
+  display: flex;
+  grid-area: filtros;
+  height: 100%;
+}
+
+.filtro__sites button {
+  color: var(--cor-letra-preta);
+  width: 70px;
+}
+
+.contratar__assinatura{
+  align-items: center;
+  color: var(--cor-letra-preta);
+  display: flex;
+  grid-area: contratarAssinatura;
+  height: 100%;
+  justify-content: center;
+}
+
+.login{
+  align-items: center;
+  color: var(--cor-letra-preta);
+  display: flex;
+  grid-area: login;
+  height: 100%;
+  justify-content: center;
+}
+
+.icone__login{
+  content: url(../../../assets/images/icons/icone-login.svg);
+  background-size: auto;
+  background-repeat: no-repeat;
+  height: 60%;
+}
