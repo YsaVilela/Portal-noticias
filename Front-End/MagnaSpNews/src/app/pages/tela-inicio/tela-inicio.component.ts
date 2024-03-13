@@ -72,7 +72,7 @@ export class TelaInicioComponent implements OnInit {
       next: (noticias) => {
         this.principaisNoticias.push(...noticias.content);
         this.loadingInicial = false;
-        if (this.principaisNoticias.length < 3) {
+        if (this.principaisNoticias.length < 3 && !noticias.empty) {
           this.buscarPrincipaisNoticias(++pagina)
         }
       },
@@ -91,7 +91,7 @@ export class TelaInicioComponent implements OnInit {
           }
         });
         this.loadingInicial = false;
-        if (this.ultimasNoticias.length < 5) {
+        if (this.ultimasNoticias.length < 5 && !noticias.empty) {
           this.buscarUltimasNoticias(++pagina)
         }
       },
@@ -110,7 +110,7 @@ export class TelaInicioComponent implements OnInit {
           }
         });
         this.loadingInicial = false;
-        if (this.maisLidas.length < 5) {
+        if (this.maisLidas.length < 5 && !noticias.empty) {
           this.buscarMaisLidas(++pagina)
         }
       },
@@ -130,10 +130,12 @@ export class TelaInicioComponent implements OnInit {
           } else {
             this.possuiMaisNoticias = false;
           }
+          this.loadingInicial = false;
           this.loading = false;
         },
         error: (error: HttpErrorResponse) => {
           this.loading = false;
+          this.loadingInicial = false;
         },
       });
   }

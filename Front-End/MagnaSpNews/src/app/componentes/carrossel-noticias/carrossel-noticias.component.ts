@@ -28,10 +28,7 @@ export class CarrosselNoticiasComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.previaAtual = this.previas[0];
-      this.imagemCapaInjetavel = this.sanitizer.bypassSecurityTrustHtml(
-        this.previaAtual.imagemCapa
-      );
-      // this.sanitizar();
+      this.sanitizar();
       this.indiceCarrossel = Array.from(
         { length: this.previas.length },
         (_, index) => index

@@ -485,3 +485,9 @@
   height: 600px;
   width: 1000px;
 }
+
+
+/* adaptações para o Veja */
+::ng-deep .seguir-author{
+  display: none;
+}

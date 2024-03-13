@@ -14,7 +14,7 @@ export class PreviaNoticiaComponent implements OnInit {
     private router: Router,
     private dadosRotas: RoteamentoService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   @Input() previa: PreviaNoticia = {
     id: 0,
@@ -35,17 +35,33 @@ export class PreviaNoticiaComponent implements OnInit {
     }
 
     setTimeout(() => {
+      this.sanitizar();
+    }, 50);
+  }
+
+  sanitizar() {
+    const regex = /https?:\/\/\S+(?=\b)/g;
+    const linkImagem = this.previa.imagemCapa.match(regex);
+
+    if (linkImagem) {
       this.imagemCapaInjetavel = this.sanitizer.bypassSecurityTrustHtml(
         this.previa.imagemCapa
-      );
-    }, 50);
+      )
+    } else {
+      this.inserirImagemDefaulf();
+    }
+  }
+
+  inserirImagemDefaulf() {
+    this.imagemCapaInjetavel = this.sanitizer.bypassSecurityTrustHtml(
+      "<img src='../../../assets/images/imagem-indisponivel.png' alt='Imagem Indisponivel'/>"
+    );
   }
 
   exibirNoticia() {
     this.dadosRotas.setIdNoticia(this.previa.id);
     this.router.navigate([
-      `/noticia/${this.previa.siteBuscado}/${
-        this.previa.dataPublicacao
+      `/noticia/${this.previa.siteBuscado}/${this.previa.dataPublicacao
       }/${this.previa.titulo.replace(/ /g, '_')}`,
     ]);
   }

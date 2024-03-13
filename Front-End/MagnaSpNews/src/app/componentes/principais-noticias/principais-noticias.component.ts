@@ -14,7 +14,7 @@ export class PrincipaisNoticiasComponent implements OnInit {
     private router: Router,
     private dadosRotas: RoteamentoService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   @Input() previas: PreviaNoticia[] = [];
 
@@ -22,10 +22,27 @@ export class PrincipaisNoticiasComponent implements OnInit {
 
   ngOnInit(): void {
     for (let i = 0; i < this.previas.length; i++) {
-      this.imagensInjetaveis[i] = this.sanitizer.bypassSecurityTrustHtml(
-        this.previas[i].imagemCapa
-      );
+      this.sanitizar(i , this.previas[i].imagemCapa)
     }
+  }
+
+  sanitizar(index: number, imagem: string) {
+    const regex = /https?:\/\/\S+(?=\b)/g;
+    const linkImagem = imagem.match(regex);
+
+    if (linkImagem) {
+      this.imagensInjetaveis[index] = this.sanitizer.bypassSecurityTrustHtml(
+        imagem
+      )
+    } else {
+      this.inserirImagemDefaulf(index);
+    }
+  }
+
+  inserirImagemDefaulf(index: number) {
+    this.imagensInjetaveis[index] = this.sanitizer.bypassSecurityTrustHtml(
+      "<img src='../../../assets/images/imagem-indisponivel.png' alt='Imagem Indisponivel'/>"
+    );
   }
 
   exibirNoticia(noticia: PreviaNoticia) {
