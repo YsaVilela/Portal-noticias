@@ -8,6 +8,7 @@ import { NoticiaService } from '../../core/services/noticia/noticia.service';
 import { PreviaNoticia } from '../../core/models/previa-noticia';
 import { format } from 'date-fns';
 import { Subscription, catchError, of, timeout } from 'rxjs';
+import { VerificarApiService } from '../../core/services/verificacao-api/verificar-api.service';
 
 declare var twttr: any;
 
@@ -38,7 +39,8 @@ export class ConteudoNoticiaComponent implements OnInit {
     private dadosRotas: RoteamentoService,
     private sanitizer: DomSanitizer,
     private noticiaService: NoticiaService,
-    private titleService: Title
+    private titleService: Title,
+    private verificarApiService: VerificarApiService
   ) { }
 
   conteudoInjetavel!: SafeHtml;
@@ -68,6 +70,8 @@ export class ConteudoNoticiaComponent implements OnInit {
   idNoticaEscolhida: number = this.dadosRotas.getIdNoticia();
 
   ngOnInit(): void {
+    this.verificarApiService.verificarConexao();
+
     if (this.idNoticaEscolhida) {
       this.buscarNoticiaPeloId(this.idNoticaEscolhida);
     } else {

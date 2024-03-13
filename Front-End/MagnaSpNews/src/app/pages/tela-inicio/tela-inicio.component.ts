@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PreviaNoticia } from '../../core/models/previa-noticia';
 import { NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { VerificarApiService } from '../../core/services/verificacao-api/verificar-api.service';
 
 @Component({
   selector: 'app-tela-inicio',
@@ -24,7 +25,11 @@ export class TelaInicioComponent implements OnInit {
   loading: boolean = false;
   loadingInicial: boolean = true;
 
-  constructor(private noticiaService: NoticiaService, private router: Router) { }
+  constructor(
+    private noticiaService: NoticiaService,
+    private router: Router,
+    private verificarApiService: VerificarApiService
+  ) { }
 
   @HostListener('document:mousemove', ['$event'])
   @HostListener('document:keypress', ['$event'])
@@ -45,6 +50,8 @@ export class TelaInicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.verificarApiService.verificarConexao();
+
     this.reiniciarContador();
     this.desativarContador();
 

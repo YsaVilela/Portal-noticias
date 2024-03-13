@@ -6,6 +6,7 @@ import { TelaDeBuscaComponent } from './pages/tela-de-busca/tela-de-busca.compon
 import { TelaNotFoundComponent } from './pages/tela-not-found/tela-not-found.component';
 import { CustomReuseStrategy } from './custom-reuse-estrategy';
 import { SobreNosComponent } from './pages/sobre-nos/sobre-nos.component';
+import { TelaManutencaoComponent } from './pages/tela-manutencao/tela-manutencao.component';
 
 const routes: Routes = [
   {
@@ -58,16 +59,14 @@ const routes: Routes = [
   {
     path: 'nao-encontrada',
     component: TelaNotFoundComponent,
-    data: {
-      reuseComponent: true,
-    },
   },
   {
     path: 'sobre-nos',
     component: SobreNosComponent,
-    data: {
-      reuseComponent: true,
-    },
+  },
+  {
+    path: 'manutencao',
+    component: TelaManutencaoComponent,
   },
 ];
 

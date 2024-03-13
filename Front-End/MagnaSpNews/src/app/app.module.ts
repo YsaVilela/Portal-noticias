@@ -20,6 +20,7 @@ import { MenuHamburguerComponent } from './componentes/menu-hamburguer/menu-hamb
 import { HttpClientModule } from '@angular/common/http';
 import { SobreNosComponent } from './pages/sobre-nos/sobre-nos.component';
 import { CustomErrorHandler } from './error-handler';
+import { TelaManutencaoComponent } from './pages/tela-manutencao/tela-manutencao.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CustomErrorHandler } from './error-handler';
     LimitarCaracteresPipe,
     MenuHamburguerComponent,
     SobreNosComponent,
+    TelaManutencaoComponent,
   ],
   imports: [
     BrowserModule,

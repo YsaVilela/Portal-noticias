@@ -5,6 +5,7 @@ import { PreviaNoticia } from '../../core/models/previa-noticia';
 import { HttpErrorResponse } from '@angular/common/http';
 import { format, sub } from 'date-fns';
 import { Subscription, catchError, of, timeout } from 'rxjs';
+import { VerificarApiService } from '../../core/services/verificacao-api/verificar-api.service';
 
 @Component({
   selector: 'app-tela-de-busca',
@@ -14,7 +15,8 @@ import { Subscription, catchError, of, timeout } from 'rxjs';
 export class TelaDeBuscaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private noticiaService: NoticiaService
+    private noticiaService: NoticiaService,
+    private verificarApiService: VerificarApiService,
   ) { }
 
   parametroBusca: String = '';
@@ -38,6 +40,8 @@ export class TelaDeBuscaComponent implements OnInit {
   timeoutValue: number = 10000;
 
   ngOnInit(): void {
+    this.verificarApiService.verificarConexao();
+
     if (this.route.snapshot.paramMap.get('portal')) {
       this.parametroBusca = 'portal';
       this.buscarPorPortal(this.fimPeriodo);
