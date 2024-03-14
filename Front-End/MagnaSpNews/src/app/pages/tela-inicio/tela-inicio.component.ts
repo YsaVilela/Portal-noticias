@@ -3,7 +3,7 @@ import { NoticiaService } from '../../core/services/noticia/noticia.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PreviaNoticia } from '../../core/models/previa-noticia';
 import { NavigationStart, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Subscription, catchError, filter, of, timeout } from 'rxjs';
 import { VerificarApiService } from '../../core/services/verificacao-api/verificar-api.service';
 
 @Component({
@@ -24,6 +24,12 @@ export class TelaInicioComponent implements OnInit {
   possuiMaisNoticias: boolean = true;
   loading: boolean = false;
   loadingInicial: boolean = true;
+
+  subscriptionAtual!: Subscription;
+
+  tentarNovamenteTelaCompleta: boolean = false;
+  tentarNovamentePrevias: boolean = false;
+  timeoutValue: number = 7000;
 
   constructor(
     private noticiaService: NoticiaService,
@@ -56,9 +62,6 @@ export class TelaInicioComponent implements OnInit {
     this.desativarContador();
 
     this.buscarPrincipaisNoticias(this.paginaPrincipaisNoticias);
-    this.buscarUltimasNoticias(this.paginaUltimasNoticias);
-    this.buscarMaisLidas(this.paginaMaisLidas);
-    this.buscarTodasPrevias();
   }
 
   verMaisNoticias() {
@@ -68,22 +71,43 @@ export class TelaInicioComponent implements OnInit {
   }
 
   buscarPrincipaisNoticias(pagina: number) {
-    this.noticiaService.listarPreviasPrincipaisNoticias(pagina).subscribe({
+    this.noticiaService.listarPreviasPrincipaisNoticias(pagina)
+    .pipe(
+      timeout(this.timeoutValue),
+      catchError(error => {
+        this.ativarTentarNovamenteTelaCompleta(this.subscriptionAtual);
+        return of();
+      })
+    )
+    .subscribe({
       next: (noticias) => {
         this.principaisNoticias.push(...noticias.content);
         this.loadingInicial = false;
         if (this.principaisNoticias.length < 3 && !noticias.empty) {
           this.buscarPrincipaisNoticias(++pagina)
         }
+        if(this.principaisNoticias.length >= 3 || noticias.empty){
+          this.buscarUltimasNoticias(this.paginaUltimasNoticias);
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.loadingInicial = false;
+        this.buscarUltimasNoticias(this.paginaUltimasNoticias);
       },
     });
   }
 
   buscarUltimasNoticias(pagina: number) {
-    this.noticiaService.listarPreviasUltimasNoticias(pagina).subscribe({
+    this.subscriptionAtual = 
+    this.noticiaService.listarPreviasUltimasNoticias(pagina)
+    .pipe(
+      timeout(this.timeoutValue),
+      catchError(error => {
+        this.ativarTentarNovamenteTelaCompleta(this.subscriptionAtual);
+        return of();
+      })
+    )
+    .subscribe({
       next: (noticias) => {
         noticias.content.forEach((previa) => {
           if (this.ultimasNoticias.length < 5) {
@@ -94,15 +118,28 @@ export class TelaInicioComponent implements OnInit {
         if (this.ultimasNoticias.length < 5 && !noticias.empty) {
           this.buscarUltimasNoticias(++pagina)
         }
+        if(this.ultimasNoticias.length >= 5 || noticias.empty){
+          this.buscarMaisLidas(this.paginaMaisLidas);
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.loadingInicial = false;
+        this.buscarMaisLidas(this.paginaMaisLidas);
       },
     });
   }
 
   buscarMaisLidas(pagina: number) {
-    this.noticiaService.listarPreviasMaisLidas(pagina).subscribe({
+    this.subscriptionAtual = 
+    this.noticiaService.listarPreviasMaisLidas(pagina)
+    .pipe(
+      timeout(this.timeoutValue),
+      catchError(error => {
+        this.ativarTentarNovamenteTelaCompleta(this.subscriptionAtual);
+        return of();
+      })
+    )
+    .subscribe({
       next: (noticias) => {
         noticias.content.forEach((previa) => {
           if (this.maisLidas.length < 5) {
@@ -113,16 +150,28 @@ export class TelaInicioComponent implements OnInit {
         if (this.maisLidas.length < 5 && !noticias.empty) {
           this.buscarMaisLidas(++pagina)
         }
+        if(this.maisLidas.length >=5 || noticias.empty){
+          this.buscarTodasPrevias();
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.loadingInicial = false;
+        this.buscarTodasPrevias();
       },
     });
   }
 
   buscarTodasPrevias() {
+    this.subscriptionAtual = 
     this.noticiaService
       .listarTodasPrevias(this.paginaPreviasCards)
+      .pipe(
+        timeout(this.timeoutValue),
+        catchError(error => {
+          this.ativarTentarNovamentePrevias(this.subscriptionAtual);
+          return of();
+        })
+      )
       .subscribe({
         next: (noticias) => {
           if (!noticias.empty) {
@@ -138,5 +187,30 @@ export class TelaInicioComponent implements OnInit {
           this.loadingInicial = false;
         },
       });
+  }
+
+  ativarTentarNovamenteTelaCompleta(subscripition: Subscription) {
+    subscripition.unsubscribe();
+    this.loadingInicial = false;
+    this.tentarNovamenteTelaCompleta = true;
+  }
+  
+  recarregarTelaCompleta() {
+    this.tentarNovamenteTelaCompleta = false;
+    this.reiniciarContador();
+    this.desativarContador();
+    this.buscarPrincipaisNoticias(this.paginaPrincipaisNoticias);
+  }
+
+  ativarTentarNovamentePrevias(subscripition: Subscription){
+    subscripition.unsubscribe();
+    this.loading = false;
+    this.tentarNovamentePrevias = true;
+  }
+
+  recarregarPrevias(){
+    this.tentarNovamentePrevias = false;
+    this.loading = false;
+    this.buscarTodasPrevias();
   }
 }

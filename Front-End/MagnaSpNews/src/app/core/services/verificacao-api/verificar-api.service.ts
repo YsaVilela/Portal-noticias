@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
 })
 export class VerificarApiService {
 
-  private apiUrl = environment.apiUrl;
+  private readonly API = `${environment.apiUrl}/noticia`;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   verificarConexao(): void {
-    this.http.get(this.apiUrl).pipe(
+    this.http.get(this.API).pipe(
       catchError(error => {
         console.error('Erro ao conectar à API:', error);
         this.router.navigate(['/manutencao']); 

@@ -71,7 +71,6 @@ export class ConteudoNoticiaComponent implements OnInit {
 
   ngOnInit(): void {
     this.verificarApiService.verificarConexao();
-
     if (this.idNoticaEscolhida) {
       this.buscarNoticiaPeloId(this.idNoticaEscolhida);
     } else {
@@ -355,6 +354,7 @@ export class ConteudoNoticiaComponent implements OnInit {
   }
 
   recarregarNoticia() {
+    this.tentarNovamenteNoticia = false;
     if (this.idNoticaEscolhida) {
       this.buscarNoticiaPeloId(this.idNoticaEscolhida);
     } else {
@@ -364,12 +364,13 @@ export class ConteudoNoticiaComponent implements OnInit {
 
   ativarTentarNovamenteNoticiasRelacionadas(subscripition: Subscription) {
     subscripition.unsubscribe();
-    this.loading = true;
+    this.loading = false;
     this.tentarNovamentePrevias = true;
-    this.recarregarPrevias();
   }
 
   recarregarPrevias() {
+    this.tentarNovamentePrevias = true;
+    this.loading= true;
     if (this.buscarPorTag) {
       this.buscaPorTag(this.fimPeriodo);
     }

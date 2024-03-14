@@ -494,6 +494,16 @@ export class TelaDeBuscaComponent implements OnInit {
   }
 
   recarregar() {
-    window.location.reload();
+    this.tentarNovamente = false;
+    this.loading = true;
+    if (this.parametroBusca == 'portal') {
+      this.buscarPorPortal(this.fimPeriodo, this.inicioPeriodo);
+    } else if (this.parametroBusca == 'palavra') {
+      this.buscaPorPalavra(this.fimPeriodo, this.inicioPeriodo);
+    } else if (this.parametroBusca == 'categoria') {
+      this.buscaPorCategoria(this.fimPeriodo, this.inicioPeriodo);
+    } else if (this.parametroBusca == 'tag') {
+      this.buscaPorTag(this.fimPeriodo, this.inicioPeriodo);
+    }
   }
 }

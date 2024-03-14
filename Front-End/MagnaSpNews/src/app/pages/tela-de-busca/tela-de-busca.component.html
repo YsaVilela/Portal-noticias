@@ -10,7 +10,7 @@
     <p>Você buscou por</p>
     <p class="termo__buscado">{{ parametroEscolhido }}</p>
   </div>
-  <div class="espaco__filtro">
+  <div class="espaco__filtro"  *ngIf="!tentarNovamente">
     <div class="ver__filtro__selecionado">{{filtroSelecionado}}</div>
     <div class="botao__filtros">
       <input type="checkbox" id="filtro" [(ngModel)]="mostrarFiltros" />
@@ -35,7 +35,7 @@
     </div>
     <div class="icone__loading" *ngIf="loading"></div>
     <div class="nao__ha__conteudo" *ngIf="!possuiMaisNoticias">Infelizmente Acabou!</div>
-    <button class="botao__ver__mais" *ngIf="possuiMaisNoticias" (click)="carregarMaisNoticias()">Ver Mais</button>
+    <button class="botao__ver__mais" *ngIf="possuiMaisNoticias && !tentarNovamente" (click)="carregarMaisNoticias()">Ver Mais</button>
   </div>
   <div class="sem__resposta" *ngIf="resultadoBusca.length == 0 && !loadingInicial && !tentarNovamente">
     <div class="icone__nao__encontrado"></div>

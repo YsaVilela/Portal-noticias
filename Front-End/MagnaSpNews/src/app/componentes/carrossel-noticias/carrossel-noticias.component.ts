@@ -79,8 +79,4 @@ export class CarrosselNoticiasComponent implements OnInit {
     this.dadosRotas.setIdNoticia(this.previaAtual.id);
     this.router.navigate([`/noticia/${this.previaAtual.siteBuscado}/${this.previaAtual.dataPublicacao}/${this.previaAtual.titulo.replace(/ /g, '_')}`]);
   }
-
-  redirecionarCategoria() {
-    this.router.navigate([`/categoria/${this.tituloCarrosel}`]);
-  }
 }

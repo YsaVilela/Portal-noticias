@@ -4,14 +4,26 @@
     <div class="icone__loading__principal"></div>
   </div>
   <div class="conteudo">
-    <app-principais-noticias [previas]="principaisNoticias" *ngIf="principaisNoticias && principaisNoticias.length >= 3"></app-principais-noticias>
-    <app-carrossel-noticias [tituloCarrosel]="'Últimas Notícias'" [previas]="ultimasNoticias" *ngIf="ultimasNoticias && ultimasNoticias.length >= 3"></app-carrossel-noticias>
-    <app-carrossel-noticias [tituloCarrosel]="'Mais Lidas'" [previas]="maisLidas" *ngIf="maisLidas && maisLidas.length >= 3"></app-carrossel-noticias>
+    <app-principais-noticias [previas]="principaisNoticias"
+      *ngIf="principaisNoticias && principaisNoticias.length >= 3"></app-principais-noticias>
+    <app-carrossel-noticias [tituloCarrosel]="'Últimas Notícias'" [previas]="ultimasNoticias"
+      *ngIf="ultimasNoticias && ultimasNoticias.length >= 3"></app-carrossel-noticias>
+    <app-carrossel-noticias [tituloCarrosel]="'Mais Lidas'" [previas]="maisLidas"
+      *ngIf="maisLidas && maisLidas.length >= 3"></app-carrossel-noticias>
     <div class="previas__noticias">
       <app-previa-noticia *ngFor="let previa of previasCards" [previa]="previa"></app-previa-noticia>
+    </div>
+    <div class="espaco__tempo__excedido" [ngClass]="{espaco__tempo__excedido__previas : tentarNovamentePrevias}"
+      *ngIf="tentarNovamenteTelaCompleta || tentarNovamentePrevias">
+      <p class="mensagem__tempo__excedido">Oops! Parece que algo deu errado e a solicitação demorou demais para ser
+        concluída.</p>
+      <p class="mensagem__tempo__excedido">Por favor, verifique sua conexão com a Internet e tente novamente.</p>
+      <button class="botao__tentar__novamente"
+        (click)="tentarNovamenteTelaCompleta ? recarregarTelaCompleta() : recarregarPrevias()">Tentar Novamente</button>
     </div>
   </div>
   <div class="icone__loading" *ngIf="loading"></div>
   <div class="nao__ha__conteudo" *ngIf="!possuiMaisNoticias">Infelizmente Acabou!</div>
-  <button class="botao__ver__mais" *ngIf="possuiMaisNoticias && previasCards.length > 0" (click)="verMaisNoticias()">Ver Mais</button>
+  <button class="botao__ver__mais" *ngIf="possuiMaisNoticias && previasCards.length > 0" (click)="verMaisNoticias()">Ver
+    Mais</button>
 </section>

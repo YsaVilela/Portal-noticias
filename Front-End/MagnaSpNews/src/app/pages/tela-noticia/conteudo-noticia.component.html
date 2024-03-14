@@ -32,7 +32,7 @@
       }}</a>
     </div>
   </article>
-  <div class="noticias__relacionadas" *ngIf="noticiasRelacionadas.length > 0">
+  <div class="noticias__relacionadas" *ngIf="noticiasRelacionadas.length > 0 || tentarNovamentePrevias">
     <h2 class="titulo__noticias__relacionadas">Notícias Relacionadas</h2>
     <div class="resultado__busca">
       <app-previa-noticia *ngFor="let previa of noticiasRelacionadas" [previa]="previa"></app-previa-noticia>

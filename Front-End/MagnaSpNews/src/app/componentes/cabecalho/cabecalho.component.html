@@ -53,7 +53,7 @@
           (keyup.enter)="pesquisar()"
           [(ngModel)]="pesquisa"
           (input)="onInput()"
-          (blur)="fecharAutocomplete()"
+          (blur)="fecharAutocomplete(); barraDePesquisaAberta = false"
         />
         <div
           class="icone__campo__busca"

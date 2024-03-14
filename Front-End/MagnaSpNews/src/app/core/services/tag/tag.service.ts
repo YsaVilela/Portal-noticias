@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class TagService {
 
-  private readonly API = environment.apiUrl;
+  private readonly API = `${environment.apiUrl}/tag`;
 
   constructor(private http: HttpClient) {}
 

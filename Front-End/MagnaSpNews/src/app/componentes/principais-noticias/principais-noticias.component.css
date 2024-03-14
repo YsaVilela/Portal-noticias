@@ -30,13 +30,14 @@
   height: min-content;
   margin-right: 30px;
   position: relative;
-  width: min-content;
+  max-width: 48%;
 }
 
 ::ng-deep .imagem__noticia__principal img {
   border-radius: 10px;
   height: 310px;
   width: 550px;
+  max-width: 100%;
 }
 
 .degrade-bottom {
@@ -75,6 +76,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  max-width: 48%;
 }
 
 .noticia__secundaria {
@@ -82,6 +84,7 @@
   cursor: pointer;
   display: flex;
   width: 580px;
+  max-width: 100%;
 }
 
 ::ng-deep .imagem__noticia__secundaria img {
@@ -112,12 +115,17 @@
   }
 
   .noticia__principal {
-    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
   }
 
   ::ng-deep .imagem__noticia__principal img {
     height: 220px;
     width: 100%;
+  }
+
+  .noticias__secundarias {
+    max-width: 100%;
   }
 
   .noticia__secundaria {

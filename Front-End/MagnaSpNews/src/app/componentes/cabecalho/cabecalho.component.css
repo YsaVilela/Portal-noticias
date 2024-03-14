@@ -147,7 +147,7 @@
   height: 25px;
   cursor: pointer;
   position: absolute;
-  right: 20px;
+  right: 60px;
 }
 
 .opcoes__autocomplete {
@@ -222,6 +222,10 @@
 
   .icone__campo__busca__mobile {
     display: block;
+  }
+
+  .icone__fechar__campo {
+    right: 20px;
   }
 
   .opcoes__autocomplete {
