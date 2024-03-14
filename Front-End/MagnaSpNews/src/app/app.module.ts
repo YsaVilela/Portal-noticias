@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SobreNosComponent } from './pages/sobre-nos/sobre-nos.component';
 import { CustomErrorHandler } from './error-handler';
 import { TelaManutencaoComponent } from './pages/tela-manutencao/tela-manutencao.component';
+import { SiteForaDoArComponent } from './componentes/site-fora-do-ar/site-fora-do-ar.component';
+import { TempoExcedidoComponent } from './componentes/tempo-excedido/tempo-excedido.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { TelaManutencaoComponent } from './pages/tela-manutencao/tela-manutencao
     MenuHamburguerComponent,
     SobreNosComponent,
     TelaManutencaoComponent,
+    SiteForaDoArComponent,
+    TempoExcedidoComponent,
   ],
   imports: [
     BrowserModule,

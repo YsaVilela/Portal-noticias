@@ -10,7 +10,8 @@
       <p class="autoria" [innerHTML]="autoriaInjetavel"></p>
       <div class="dados__publicacao">
         <p class="data__publicacao">Publicado em {{ noticia.dataPublicacao | date : 'dd/MM/yyyy \'às\' HH:mm'}}</p>
-        <p class="data__modificacao" *ngIf="noticia.dataModificada">| Atualizado em {{ noticia.dataModificada | date : 'dd/MM/yyyy \'às\' HH:mm'}}</p>
+        <p class="data__modificacao" *ngIf="noticia.dataModificada">| Atualizado em {{ noticia.dataModificada | date :
+          'dd/MM/yyyy \'às\' HH:mm'}}</p>
       </div>
     </div>
     <div class="conteudo__noticia" [innerHTML]="conteudoInjetavel"></div>
@@ -29,7 +30,7 @@
       <p>Você pode encontrar a matéria oficial em</p>
       <a href="{{ noticia.linkDaNoticiaOficial }}">{{
         linkPortal
-      }}</a>
+        }}</a>
     </div>
   </article>
   <div class="noticias__relacionadas" *ngIf="noticiasRelacionadas.length > 0 || tentarNovamentePrevias">
@@ -39,12 +40,10 @@
     </div>
     <div class="icone__loading" *ngIf="loading"></div>
     <div class="nao__ha__conteudo" *ngIf="!possuiMaisNoticias">Infelizmente Acabou!</div>
-    <button class="botao__ver__mais" *ngIf="possuiMaisNoticias && !tentarNovamentePrevias" (click)="carregarMaisNoticias()">Ver Mais</button>
+    <button class="botao__ver__mais" *ngIf="possuiMaisNoticias && !tentarNovamentePrevias"
+      (click)="carregarMaisNoticias()">Ver Mais</button>
   </div>
-  <div class="espaco__tempo__excedido" [ngClass]="{espaco__tempo__excedido__previas : tentarNovamentePrevias}" *ngIf="tentarNovamenteNoticia || tentarNovamentePrevias">
-    <p class="mensagem__tempo__excedido">Oops! Parece que algo deu errado e a solicitação demorou demais para ser
-      concluída.</p>
-    <p class="mensagem__tempo__excedido">Por favor, verifique sua conexão com a Internet e tente novamente.</p>
-    <button class="botao__tentar__novamente" (click)="tentarNovamenteNoticia ? recarregarNoticia() : recarregarPrevias()">Tentar Novamente</button>
-  </div>
+  <app-tempo-excedido [classePrevias]="tentarNovamentePrevias" *ngIf="tentarNovamenteNoticia || tentarNovamentePrevias"
+    (tentarNovamente)="tentarNovamenteNoticia ? recarregarNoticia() : recarregarPrevias()">
+  </app-tempo-excedido>
 </section>

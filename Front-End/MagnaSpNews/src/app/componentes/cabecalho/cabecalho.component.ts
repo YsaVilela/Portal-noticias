@@ -86,6 +86,7 @@ export class CabecalhoComponent implements OnInit {
 
   fecharAutocomplete(){
     setTimeout(()=>{
+      this.barraDePesquisaAberta = false;
       this.autocompleteAberto = false;
     },200)
   }

@@ -103,7 +103,7 @@
   flex-direction: column;
   height: 180px;
   justify-content: center;
-  margin: 40px 0 15px;
+  margin: 20px 0 15px;
   width: calc(var(--largura-noticia) - 100px);
 }
 
@@ -134,13 +134,12 @@
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
-  margin-bottom: 40px;
-  margin-top: 5px;
+  margin: 5px 0 20px;
   text-align: center;
 }
 
 ::ng-deep .imagem__container {
-  margin: 40px 0 10px;
+  margin: 40px 0 5px;
   border-radius: 10px;
   height: auto;
   max-height: 600px;
@@ -169,9 +168,12 @@
 ::ng-deep .tabela {
   border-collapse: collapse;
   margin: 40px 0 15px;
+  max-width: 98%;
+  overflow-x: auto;
+  height: max-content !important;
 }
 
-::ng-deep .tabela td {
+::ng-deep .tabela td, ::ng-deep .tabela tr {
   text-align: center;
   border: 1.5px solid var(--cor-letra-preta);
   color: var(--cor-letra-preta);
@@ -182,6 +184,7 @@
   font-size: 18px;
   padding: 15px;
   vertical-align: middle;
+  width: min-content !important;
 }
 
 ::ng-deep .citacao {
@@ -214,13 +217,14 @@
 }
 
 ::ng-deep .video__container {
-  margin: 40px 0 10px;
+  margin: 20px 0 10px;
   width: 100%;
 }
 
-::ng-deep .video__container iframe {
+::ng-deep .video__container iframe, ::ng-deep .video__container video {
   border-radius: 8px;
   width: 100%;
+  min-height: 450px;
 }
 
 ::ng-deep .lista {
@@ -258,6 +262,28 @@
 
 ::ng-deep strong, ::ng-deep b{
   font-weight: 450;
+}
+
+::ng-deep .conteudo__noticia > strong {
+  color: var(--cor-letra-preta);
+  font-family: var(--fonte-padrao-noticia);
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  margin-bottom:20px;
+  text-align: initial;
+  text-indent: 35px;
+  width: 100%;
+}
+
+::ng-deep .conteudo__noticia > strong:before {
+  color: var(--cor-padrao);
+  content: "\2012";
+  font-size: 26px;
+  margin-right: 0.3em;
 }
 
 .espaco__tags {
@@ -408,6 +434,10 @@
     width: calc(100vw - 40px);
   }
 
+  ::ng-deep .video__container iframe, ::ng-deep .video__container video {
+    min-height: 200px;
+  }
+
   .espaco__link__noticia__oficial a {
     width: calc(var(--largura-noticia) - 10px);
   }
@@ -427,6 +457,10 @@
     height: auto;
     width: 100%;
   }
+
+  ::ng-deep .tabela {
+    max-width: 98% !important;
+  }
 }
 
 @media (min-width: 431px) and (max-width: 1024px) {
@@ -438,6 +472,10 @@
     margin-top: 20px;
     max-width: 100%;
     max-height: auto;
+  }
+
+  ::ng-deep .video__container iframe, ::ng-deep .video__container video {
+    min-height: 350px;
   }
 
   .resultado__busca {

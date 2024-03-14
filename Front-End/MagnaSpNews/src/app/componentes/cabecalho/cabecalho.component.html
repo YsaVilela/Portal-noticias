@@ -1,18 +1,4 @@
 <header class="cabecalho" [ngClass]="{ cabecalho__fixo: cabecalhoFixo }">
-  <!-- <div class="campo__busca__mobile" *ngIf="abrirBarraDeBusca">
-      <input
-        type="text"
-        placeholder="Busque aqui..."
-        (keyup.enter)="pesquisar()"
-        [(ngModel)]="pesquisa"
-        autofocus
-        class="barra__busca__aberta"
-      />
-      <div
-        class="icone__fechar__campo"
-        (click)="abrirBarraDeBusca = false"
-      ></div>
-  </div> -->
   <div
     [ngClass]="{
       cabecalho__barra__pesquisa: barraDePesquisaAberta,
@@ -53,7 +39,7 @@
           (keyup.enter)="pesquisar()"
           [(ngModel)]="pesquisa"
           (input)="onInput()"
-          (blur)="fecharAutocomplete(); barraDePesquisaAberta = false"
+          (blur)="fecharAutocomplete()"
         />
         <div
           class="icone__campo__busca"

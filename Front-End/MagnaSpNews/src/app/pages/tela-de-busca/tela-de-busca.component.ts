@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { format, sub } from 'date-fns';
 import { Subscription, catchError, of, timeout } from 'rxjs';
 import { VerificarApiService } from '../../core/services/verificacao-api/verificar-api.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tela-de-busca',
@@ -17,6 +18,7 @@ export class TelaDeBuscaComponent implements OnInit {
     private route: ActivatedRoute,
     private noticiaService: NoticiaService,
     private verificarApiService: VerificarApiService,
+    private titleService: Title,
   ) { }
 
   parametroBusca: String = '';
@@ -38,6 +40,8 @@ export class TelaDeBuscaComponent implements OnInit {
 
   tentarNovamente: boolean = false;
   timeoutValue: number = 10000;
+
+  siteForaDoAr:boolean = false;
 
   ngOnInit(): void {
     this.verificarApiService.verificarConexao();
@@ -73,6 +77,7 @@ export class TelaDeBuscaComponent implements OnInit {
 
   buscarPorPortal(fimPeriodo: string, inicioPeriodo?: string) {
     this.parametroEscolhido = this.route.snapshot.paramMap.get('portal')!;
+    this.titleService.setTitle(`Busca por ${this.parametroEscolhido}`);
     switch (this.parametroEscolhido) {
       case 'G1':
         this.linkPortal = 'https://g1.globo.com/';
@@ -105,8 +110,17 @@ export class TelaDeBuscaComponent implements OnInit {
         )
         .pipe(
           timeout(this.timeoutValue),
-          catchError(error => {
-            this.ativarTentarNovamente(this.subscriptionAtual);
+          catchError(error => {          
+            if(error.error == "Site fora do Ar!"){
+              this.loadingInicial = false;
+              this.siteForaDoAr = true;
+              setTimeout(()=>{
+                this.siteForaDoAr = false;
+                this.buscarPorPortal(fimPeriodo, inicioPeriodo)
+              },420000)
+            }else{
+              this.ativarTentarNovamente(this.subscriptionAtual);
+            }
             return of();
           })
         )
@@ -136,6 +150,8 @@ export class TelaDeBuscaComponent implements OnInit {
     this.parametroEscolhido = this.route.snapshot.paramMap
       .get('palavra')
       ?.replace(/_/g, ' ')!;
+
+    this.titleService.setTitle(`Busca por ${this.parametroEscolhido}`);
 
     if (this.buscarPorTitulo) {
       this.buscaPorTitulo(fimPeriodo, inicioPeriodo);
@@ -286,6 +302,9 @@ export class TelaDeBuscaComponent implements OnInit {
     if (palavra) {
       this.parametroEscolhido = palavra;
     }
+
+    this.titleService.setTitle(`Busca por ${this.parametroEscolhido}`);
+
     const subItensCategoria: string[] = [];
     const subItensSaude: string[] = [
       'Saúde',
@@ -393,6 +412,9 @@ export class TelaDeBuscaComponent implements OnInit {
     this.parametroEscolhido = this.route.snapshot.paramMap
       .get('tag')
       ?.replace(/_/g, ' ')!;
+    
+    this.titleService.setTitle(`Busca por ${this.parametroEscolhido}`);
+
     this.subscriptionAtual =
       this.noticiaService
         .buscarNoticiaPorTag(

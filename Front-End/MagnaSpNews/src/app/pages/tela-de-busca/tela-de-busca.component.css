@@ -30,6 +30,8 @@
 .descricao__busca .termo__buscado {
   color: var(--cor-padrao);
   text-decoration: none;
+  max-width: 98%;
+  word-break: break-all;
 }
 
 .espaco__filtro {

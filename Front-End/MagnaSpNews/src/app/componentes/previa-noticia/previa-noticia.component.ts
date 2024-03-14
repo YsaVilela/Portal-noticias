@@ -29,9 +29,11 @@ export class PreviaNoticiaComponent implements OnInit {
   limiteDeCaracteres!: number;
   ngOnInit(): void {
     if (window.innerWidth < 426) {
+      this.limiteDeCaracteres = 200;
+    } else if (window.innerWidth > 426 && window.innerWidth < 1024){
       this.limiteDeCaracteres = 150;
-    } else {
-      this.limiteDeCaracteres = 390;
+    }else {
+      this.limiteDeCaracteres = 320;
     }
 
     setTimeout(() => {
@@ -43,13 +45,14 @@ export class PreviaNoticiaComponent implements OnInit {
     const regex = /https?:\/\/\S+(?=\b)/g;
     const linkImagem = this.previa.imagemCapa.match(regex);
 
-    if (linkImagem) {
+    if(!linkImagem || linkImagem[0] == 'https://conteudo.imguol.com.br/c/geral/3d/2021/05/25/placeholder-image-1621949831997_v2_300x225.jpg'){
+      this.inserirImagemDefaulf();
+    }
+    else{
       this.imagemCapaInjetavel = this.sanitizer.bypassSecurityTrustHtml(
         this.previa.imagemCapa
       )
-    } else {
-      this.inserirImagemDefaulf();
-    }
+    } 
   }
 
   inserirImagemDefaulf() {

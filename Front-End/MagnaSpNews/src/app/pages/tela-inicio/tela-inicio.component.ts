@@ -5,6 +5,7 @@ import { PreviaNoticia } from '../../core/models/previa-noticia';
 import { NavigationStart, Router } from '@angular/router';
 import { Subscription, catchError, filter, of, timeout } from 'rxjs';
 import { VerificarApiService } from '../../core/services/verificacao-api/verificar-api.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tela-inicio',
@@ -34,7 +35,8 @@ export class TelaInicioComponent implements OnInit {
   constructor(
     private noticiaService: NoticiaService,
     private router: Router,
-    private verificarApiService: VerificarApiService
+    private verificarApiService: VerificarApiService,
+    private titleService: Title,
   ) { }
 
   @HostListener('document:mousemove', ['$event'])
@@ -56,6 +58,7 @@ export class TelaInicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('MagnaSp News');
     this.verificarApiService.verificarConexao();
 
     this.reiniciarContador();
@@ -81,7 +84,11 @@ export class TelaInicioComponent implements OnInit {
     )
     .subscribe({
       next: (noticias) => {
-        this.principaisNoticias.push(...noticias.content);
+        noticias.content.forEach((previa)=>{
+          if(this.principaisNoticias.length < 3 && !previa.imagemCapa.includes("src='null'")){
+            this.principaisNoticias.push(previa);
+          }
+        })
         this.loadingInicial = false;
         if (this.principaisNoticias.length < 3 && !noticias.empty) {
           this.buscarPrincipaisNoticias(++pagina)
@@ -110,7 +117,7 @@ export class TelaInicioComponent implements OnInit {
     .subscribe({
       next: (noticias) => {
         noticias.content.forEach((previa) => {
-          if (this.ultimasNoticias.length < 5) {
+          if (this.ultimasNoticias.length < 5 && !previa.imagemCapa.includes("src='null'")) {
             this.ultimasNoticias.push(previa);
           }
         });
@@ -142,7 +149,7 @@ export class TelaInicioComponent implements OnInit {
     .subscribe({
       next: (noticias) => {
         noticias.content.forEach((previa) => {
-          if (this.maisLidas.length < 5) {
+          if (this.maisLidas.length < 5 && !previa.imagemCapa.includes("src='null'")) {
             this.maisLidas.push(previa);
           }
         });

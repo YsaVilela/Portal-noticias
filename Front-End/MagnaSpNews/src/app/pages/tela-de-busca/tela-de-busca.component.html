@@ -10,7 +10,7 @@
     <p>Você buscou por</p>
     <p class="termo__buscado">{{ parametroEscolhido }}</p>
   </div>
-  <div class="espaco__filtro"  *ngIf="!tentarNovamente">
+  <div class="espaco__filtro" *ngIf="!tentarNovamente">
     <div class="ver__filtro__selecionado">{{filtroSelecionado}}</div>
     <div class="botao__filtros">
       <input type="checkbox" id="filtro" [(ngModel)]="mostrarFiltros" />
@@ -35,16 +35,13 @@
     </div>
     <div class="icone__loading" *ngIf="loading"></div>
     <div class="nao__ha__conteudo" *ngIf="!possuiMaisNoticias">Infelizmente Acabou!</div>
-    <button class="botao__ver__mais" *ngIf="possuiMaisNoticias && !tentarNovamente" (click)="carregarMaisNoticias()">Ver Mais</button>
+    <button class="botao__ver__mais" *ngIf="possuiMaisNoticias && !tentarNovamente" (click)="carregarMaisNoticias()">Ver
+      Mais</button>
   </div>
-  <div class="sem__resposta" *ngIf="resultadoBusca.length == 0 && !loadingInicial && !tentarNovamente">
+  <div class="sem__resposta" *ngIf="resultadoBusca.length == 0 && !loadingInicial && !tentarNovamente && !siteForaDoAr">
     <div class="icone__nao__encontrado"></div>
     <div class="sem__resposta__mensagem">Não há resultados para sua busca.</div>
   </div>
-  <div class="espaco__tempo__excedido" *ngIf="tentarNovamente">
-    <p class="mensagem__tempo__excedido">Oops! Parece que algo deu errado e a solicitação demorou demais para ser
-      concluída.</p>
-    <p class="mensagem__tempo__excedido">Por favor, verifique sua conexão com a Internet e tente novamente.</p>
-    <button class="botao__tentar__novamente" (click)="recarregar()">Tentar Novamente</button>
-  </div>
+  <app-tempo-excedido *ngIf="tentarNovamente" (tentarNovamente)="recarregar()"> </app-tempo-excedido>
+  <app-site-fora-do-ar *ngIf="siteForaDoAr"></app-site-fora-do-ar>
 </section>
