@@ -12,13 +12,13 @@
       *ngIf="menuAberto && !barraDePesquisaAberta"
       (fecharMenu)="menuAberto = false"
     ></app-menu-hamburguer>
-    <div class="logo"  *ngIf="!barraDePesquisaAberta" routerLink="/home"></div>
+    <div class="logo"  *ngIf="!barraDePesquisaAberta" routerLink="/home" (mousedown)="exibirHomeNovaAba($event)"></div>
     <h1
       class="titulo"
       (click)="redirecionar(titulo)"
       *ngIf="!barraDePesquisaAberta"
     >
-      {{ titulo }}
+      {{ titulo | limitarCaracteres: 22}}
     </h1>
     <div
       [ngClass]="{

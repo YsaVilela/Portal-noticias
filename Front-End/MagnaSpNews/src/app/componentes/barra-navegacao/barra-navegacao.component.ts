@@ -14,4 +14,12 @@ export class BarraNavegacaoComponent {
   redirecionar(nomePortal: String) {
     this.router.navigate([`noticias/${nomePortal}`]);
   }
+
+  buscarSiteEmNovaAba(nomePortal: String, event: MouseEvent) {
+    const linkOrigem = window.location.origin;
+    if (event.button === 1) {
+      const url = `${linkOrigem}/noticias/${nomePortal}`; 
+      window.open(url, '_blank');
+    }
+  }
 }

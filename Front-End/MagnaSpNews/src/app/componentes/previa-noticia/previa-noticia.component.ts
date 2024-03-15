@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { PreviaNoticia } from '../../core/models/previa-noticia';
 import { Router } from '@angular/router';
 import { RoteamentoService } from '../../core/services/rotas/roteamento.service';
@@ -13,7 +13,7 @@ export class PreviaNoticiaComponent implements OnInit {
   constructor(
     private router: Router,
     private dadosRotas: RoteamentoService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
   ) { }
 
   @Input() previa: PreviaNoticia = {
@@ -45,7 +45,7 @@ export class PreviaNoticiaComponent implements OnInit {
     const regex = /https?:\/\/\S+(?=\b)/g;
     const linkImagem = this.previa.imagemCapa.match(regex);
 
-    if(!linkImagem || linkImagem[0] == 'https://conteudo.imguol.com.br/c/geral/3d/2021/05/25/placeholder-image-1621949831997_v2_300x225.jpg'){
+    if(!linkImagem || linkImagem[0] == 'https://conteudo.imguol.com.br/c/geral/3d/2021/05/25/placeholder-image-1621949831997_v2_300x225.jpg' || linkImagem[0] ==  "https://conteudo.imguol.com.br/c/geral/3d/2021/05/25/placeholder-image-1621949831997_v2_300x200.jpg"){
       this.inserirImagemDefaulf();
     }
     else{
@@ -71,5 +71,13 @@ export class PreviaNoticiaComponent implements OnInit {
 
   buscarSite() {
     this.router.navigate([`/noticias/${this.previa.siteBuscado}`]);
+  }
+
+  buscarSiteEmNovaAba(event: MouseEvent) {
+    const linkOrigem = window.location.origin;
+    if (event.button === 1) {
+      const url = `${linkOrigem}/noticias/${this.previa.siteBuscado}`; 
+      window.open(url, '_blank');
+    }
   }
 }

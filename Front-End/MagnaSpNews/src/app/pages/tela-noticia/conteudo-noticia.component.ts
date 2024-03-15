@@ -51,6 +51,8 @@ export class ConteudoNoticiaComponent implements OnInit {
   buscarPorTitulo: boolean = false;
   buscarPorCategoria: boolean = false;
   buscarPorTag: boolean = false;
+  quantidadeDeTags!: number;
+  tagBuscada: number = 0;
   possuiMaisNoticias: boolean = true;
   noticiaEncontrada: boolean = false;
   loading: boolean = false;
@@ -181,8 +183,9 @@ export class ConteudoNoticiaComponent implements OnInit {
   }
 
   buscarNoticiasRelacionadas() {
+    this.quantidadeDeTags = this.noticia.tags.length;
     if (this.noticiaEncontrada) {
-      if (this.noticia.tags.length > 0) {
+      if (this.quantidadeDeTags > 0) {
         this.buscarPorTag = true;
       } else {
         this.buscarPorCategoria = true;
@@ -220,41 +223,45 @@ export class ConteudoNoticiaComponent implements OnInit {
   }
 
   buscaPorTag(fimPeriodo: string) {
-    this.noticia.tags.forEach((tag) => {
-      this.subscriptionBuscaNoticiasRelacionadas =
-        this.noticiaService
-          .buscarNoticiaPorTag(
-            this.paginaNoticiasRelacionadas,
-            tag.nome,
-            fimPeriodo
-          )
-          .pipe(
-            timeout(this.timeoutValue),
-            catchError(error => {
-              this.ativarTentarNovamente(this.subscriptionBuscaNoticiasRelacionadas);
-              return of();
-            })
-          )
-          .subscribe({
-            next: (previaNoticia) => {
-              if (!previaNoticia.empty) {
-                previaNoticia.content.forEach((previaNoticia) => {
-                  if (this.verificarSeJaContemPrevia(previaNoticia.id)) {
-                    this.noticiasRelacionadas.push(previaNoticia);
-                  }
-                });
+    this.subscriptionBuscaNoticiasRelacionadas =
+      this.noticiaService
+        .buscarNoticiaPorTag(
+          this.paginaNoticiasRelacionadas,
+          this.noticia.tags[this.tagBuscada].nome,
+          fimPeriodo
+        )
+        .pipe(
+          timeout(this.timeoutValue),
+          catchError(error => {
+            this.ativarTentarNovamente(this.subscriptionBuscaNoticiasRelacionadas);
+            return of();
+          })
+        )
+        .subscribe({
+          next: (previaNoticia) => {
+            if (!previaNoticia.empty) {
+              previaNoticia.content.forEach((previaNoticia) => {
+                if (this.verificarSeJaContemPrevia(previaNoticia.id)) {
+                  this.noticiasRelacionadas.push(previaNoticia);
+                }
+              });
+              this.loading = false;
+            } else {
+              if (this.tagBuscada < this.quantidadeDeTags - 1) {
+                this.tagBuscada++;
+                this.buscaPorTag(fimPeriodo);
               } else {
                 this.paginaNoticiasRelacionadas = 0;
                 this.buscarPorTag = false;
                 this.buscarPorTitulo = true;
                 this.buscaPorTitulo(fimPeriodo);
               }
-            },
-            error: (error: HttpErrorResponse) => {
-              this.loading = false;
-            },
-          });
-    });
+            }
+          },
+          error: (error: HttpErrorResponse) => {
+            this.loading = false;
+          },
+        });
   }
 
   buscaPorTitulo(fimPeriodo: string) {
@@ -370,7 +377,7 @@ export class ConteudoNoticiaComponent implements OnInit {
 
   recarregarPrevias() {
     this.tentarNovamentePrevias = true;
-    this.loading= true;
+    this.loading = true;
     if (this.buscarPorTag) {
       this.buscaPorTag(this.fimPeriodo);
     }

@@ -33,7 +33,7 @@ export class CabecalhoComponent implements OnInit {
 
   resultadoBuscaTag: Tag[] = [];
 
-  constructor(private router: Router, private tagService: TagService) {}
+  constructor(private router: Router, private tagService: TagService) { }
 
   ngOnInit(): void {
     this.larguraDaTela = window.innerWidth;
@@ -84,10 +84,18 @@ export class CabecalhoComponent implements OnInit {
     this.router.navigate([`/tag/${nomeTag}`]);
   }
 
-  fecharAutocomplete(){
-    setTimeout(()=>{
+  fecharAutocomplete() {
+    setTimeout(() => {
       this.barraDePesquisaAberta = false;
       this.autocompleteAberto = false;
-    },200)
+    }, 200)
+  }
+
+  exibirHomeNovaAba(event: MouseEvent) {
+    const linkOrigem = window.location.origin;
+    if (event.button === 1) {
+      const url = `${linkOrigem}/home`;
+      window.open(url, '_blank');
+    }
   }
 }
