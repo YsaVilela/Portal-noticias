@@ -121,49 +121,6 @@
   width: 100%;
 }
 
-.botao__ver__mais {
-  background-color: var(--cor-padrao);
-  border-radius: 8px;
-  color: var(--cor-letra-branca);
-  font-family: var(--fonte-padrao-portal);
-  font-weight: 400;
-  font-style: normal;
-  margin: 20px;
-  padding: 12px;
-  width: 200px;
-}
-
-.espaco__tempo__excedido{
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 25px;
-  width: 75%;
-}
-
-.mensagem__tempo__excedido{
-  color: var(--cor-padrao);
-  font-family: var(--fonte-padrao-portal);
-  font-weight: 400;
-  font-style: normal;
-  font-size: 24px;
-  text-align: center;
-}
-
-.botao__tentar__novamente {
-  background-color: var(--cor-padrao);
-  border-radius: 8px;
-  color: var(--cor-letra-branca);
-  font-family: var(--fonte-padrao-portal);
-  font-weight: 400;
-  font-style: normal;
-  font-size: 22px;
-  margin: 20px;
-  padding: 12px;
-  width: 280px;
-}
-
 .sem__resposta{
   align-items: center;
   display: flex;

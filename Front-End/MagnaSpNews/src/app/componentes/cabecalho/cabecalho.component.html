@@ -6,7 +6,7 @@
     }"
   >
     <div class="menu" *ngIf="!barraDePesquisaAberta">
-      <div for="menu" class="icone__menu" (click)="menuAberto = true"></div>
+      <div for="menu" class="icone__menu" (click)="menuAberto = true" data-test="iconeMenu"></div>
     </div>
     <app-menu-hamburguer
       *ngIf="menuAberto && !barraDePesquisaAberta"
@@ -40,6 +40,7 @@
           [(ngModel)]="pesquisa"
           (input)="onInput()"
           (blur)="fecharAutocomplete()"
+          data-test="inputBusca"
         />
         <div
           class="icone__campo__busca"
@@ -50,6 +51,7 @@
           class="icone__fechar__campo"
           (click)="barraDePesquisaAberta = false"
           *ngIf="barraDePesquisaAberta"
+          data-test="fecharBuscaMobile"
         ></div>
       </div>
       <ul
@@ -71,6 +73,7 @@
         class="icone__campo__busca__mobile"
         (click)="barraDePesquisaAberta = true"
         *ngIf="!barraDePesquisaAberta"
+        data-test="abrirBuscaMobile"
       ></div>
     </div>
   </div>

@@ -5,7 +5,7 @@
       <div class="icone__anterior"></div>
     </button>
     <div class="conteudo__noticia" (click)="exibirNoticia()" (swipeleft)="proximaNoticia()"
-      (swiperight)="voltarNoticia()">
+      (swiperight)="voltarNoticia()" data-test="noticiaCarrossel">
       <div class="imagem__capa__carrosel" [innerHTML]="imagemCapaInjetavel"></div>
       <div class="degrade-bottom"></div>
       <p class="titulo__noticia__carrossel" *ngIf="previaAtual">

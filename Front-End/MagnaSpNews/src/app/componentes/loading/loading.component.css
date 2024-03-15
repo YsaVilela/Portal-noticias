@@ -1,0 +1,21 @@
+.espaco__loading {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.icone__loading {
+    content: url(../../../assets/images/icons/loading.svg);
+    background-size: auto;
+    background-repeat: no-repeat;
+    height: 50px;
+}
+
+.icone__loading__principal {
+    content: url(../../../assets/images/icons/loading.svg);
+    background-size: auto;
+    background-repeat: no-repeat;
+    height: 8vh;
+    margin-top: 100px;
+}

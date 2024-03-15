@@ -23,6 +23,9 @@ import { CustomErrorHandler } from './error-handler';
 import { TelaManutencaoComponent } from './pages/tela-manutencao/tela-manutencao.component';
 import { SiteForaDoArComponent } from './componentes/site-fora-do-ar/site-fora-do-ar.component';
 import { TempoExcedidoComponent } from './componentes/tempo-excedido/tempo-excedido.component';
+import { LoadingComponent } from './componentes/loading/loading.component';
+import { AcabouConteudoComponent } from './componentes/acabou-conteudo/acabou-conteudo.component';
+import { BtnVerMaisComponent } from './componentes/btn-ver-mais/btn-ver-mais.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,9 @@ import { TempoExcedidoComponent } from './componentes/tempo-excedido/tempo-exced
     TelaManutencaoComponent,
     SiteForaDoArComponent,
     TempoExcedidoComponent,
+    LoadingComponent,
+    AcabouConteudoComponent,
+    BtnVerMaisComponent,
   ],
   imports: [
     BrowserModule,

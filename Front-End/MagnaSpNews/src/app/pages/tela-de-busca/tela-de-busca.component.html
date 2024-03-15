@@ -26,17 +26,14 @@
       </div>
     </div>
   </div>
-  <div class="espaco__loading" *ngIf="loadingInicial">
-    <div class="icone__loading__principal"></div>
-  </div>
+  <app-loading *ngIf="loadingInicial" [loadingPrincipal]="true"></app-loading>
   <div class="cards" *ngIf="resultadoBusca.length > 0">
-    <div class="resultado__busca">
+    <div class="resultado__busca" data-test="resultadoBusca">
       <app-previa-noticia *ngFor="let previa of resultadoBusca" [previa]="previa"></app-previa-noticia>
     </div>
-    <div class="icone__loading" *ngIf="loading"></div>
-    <div class="nao__ha__conteudo" *ngIf="!possuiMaisNoticias">Infelizmente Acabou!</div>
-    <button class="botao__ver__mais" *ngIf="possuiMaisNoticias && !tentarNovamente" (click)="carregarMaisNoticias()">Ver
-      Mais</button>
+    <app-loading *ngIf="loading" [loadingPrincipal]="false"></app-loading>
+    <app-acabou-conteudo *ngIf="!possuiMaisNoticias"></app-acabou-conteudo>
+    <app-btn-ver-mais *ngIf="possuiMaisNoticias && !tentarNovamente" (click)="carregarMaisNoticias()"></app-btn-ver-mais>
   </div>
   <div class="sem__resposta" *ngIf="resultadoBusca.length == 0 && !loadingInicial && !tentarNovamente && !siteForaDoAr">
     <div class="icone__nao__encontrado"></div>

@@ -1,6 +1,6 @@
 <nav class="barra__navegacao">
 <div class="filtro__sites">
-  <button  *ngFor="let portal of portais" (click)="redirecionar(portal)" (mousedown)="buscarSiteEmNovaAba(portal, $event)">{{portal}}</button>
+  <button  *ngFor="let portal of portais" (click)="redirecionar(portal)" (mousedown)="buscarSiteEmNovaAba(portal, $event)" data-test="portal">{{portal}}</button>
 </div>
 <!-- <div class="contratar__assinatura">
   <button>Assine Já</button>
