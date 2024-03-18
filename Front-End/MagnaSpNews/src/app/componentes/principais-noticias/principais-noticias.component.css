@@ -84,6 +84,7 @@
   align-items: center;
   cursor: pointer;
   display: flex;
+  flex-direction: row-reverse;
   width: 580px;
   max-width: 100%;
 }
@@ -108,7 +109,7 @@
   margin-left: 10px;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 630px) {
   .noticias {
     flex-direction: column;
     gap: 30px;
@@ -116,7 +117,7 @@
   }
 
   .noticia__principal {
-    max-width: 100%;
+    max-width: 540px;
     margin-right: 0;
   }
 
@@ -143,7 +144,7 @@
   }
 }
 
-@media (min-width: 431px) and (max-width: 1024px) {
+@media (min-width: 631px) and (max-width: 1024px) {
   .noticias {
     width: 94%;
   }

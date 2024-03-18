@@ -113,7 +113,20 @@
   }
 }
 
-@media (min-width: 431px) and (max-width: 1024px) {
+@media (min-width: 431px) and (max-width: 650px) {
+  .previa__noticia {
+    flex-direction: column-reverse;
+    width: calc(100vw - 50px);
+  }
+  .previa__noticia ::ng-deep .imagem__capa img {
+    border-radius: 15px;
+    height: 180px;
+    width: calc(100vw - 40px);
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 651px) and (max-width: 1024px) {
   .previa__noticia {
     width: calc(100vw - 100px);
   }

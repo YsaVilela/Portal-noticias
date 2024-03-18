@@ -38,7 +38,7 @@
     </div>
     <app-loading *ngIf="loading" [loadingPrincipal]="false"></app-loading>
     <app-acabou-conteudo *ngIf="!possuiMaisNoticias"></app-acabou-conteudo>
-    <app-btn-ver-mais *ngIf="possuiMaisNoticias && !tentarNovamentePrevias"></app-btn-ver-mais>
+    <app-btn-ver-mais *ngIf="possuiMaisNoticias && !tentarNovamentePrevias" (click)="carregarMaisNoticias()"></app-btn-ver-mais>
   </div>
   <app-tempo-excedido [classePrevias]="tentarNovamentePrevias" *ngIf="tentarNovamenteNoticia || tentarNovamentePrevias"
     (tentarNovamente)="tentarNovamenteNoticia ? recarregarNoticia() : recarregarPrevias()">

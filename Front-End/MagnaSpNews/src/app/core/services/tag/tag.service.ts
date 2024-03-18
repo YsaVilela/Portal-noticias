@@ -13,11 +13,11 @@ export class TagService {
 
   constructor(private http: HttpClient) {}
 
-  buscarNomeTag(busca: string): Observable<PaginacaoTag>{
+  buscarNomeTag(tag: string): Observable<PaginacaoTag>{
     const quantidadeDeTagsParaCarregar = 20;
-    let params = new HttpParams()
-    .set('size', quantidadeDeTagsParaCarregar);
-
-    return this.http.get<PaginacaoTag>(`${this.API}/${busca}`, {params});
+    let params = new HttpParams();
+    params = params.set('size', quantidadeDeTagsParaCarregar);
+    params = params.set('nomeTag', tag);
+    return this.http.get<PaginacaoTag>(`${this.API}/nomeTag`, {params});
   }
 }

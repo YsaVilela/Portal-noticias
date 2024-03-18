@@ -48,6 +48,7 @@
 
 ::ng-deep .autoria {
   color: var(--cor-letra-preta);
+  display: flex;
   font-family: var(--fonte-padrao-noticia);
   font-optical-sizing: auto;
   font-weight: 400;
@@ -93,6 +94,10 @@
   text-align: initial;
   text-indent: 35px;
   width: 100%;
+}
+
+::ng-deep .text__container span{
+  font-weight: 300 !important;
 }
 
 ::ng-deep .video__indisponivel {
@@ -142,7 +147,7 @@
   margin: 40px 0 5px;
   border-radius: 10px;
   height: auto;
-  max-height: 600px;
+  /* max-height: 600px; */
   max-width: calc(var(--largura-noticia) - 100px);
 }
 
@@ -436,6 +441,7 @@
 
   ::ng-deep .video__container iframe, ::ng-deep .video__container video {
     min-height: 200px;
+    height: 205px !important;
   }
 
   .espaco__link__noticia__oficial a {

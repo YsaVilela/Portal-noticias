@@ -68,7 +68,7 @@ export class NoticiaService {
 
   buscarNoticiaPorTag(
     pagina: number,
-    tag: String,
+    tag: string,
     fimPeriodo: string,
     inicioPeriodo?: string
   ): Observable<PaginacaoPrevia> {
@@ -77,9 +77,10 @@ export class NoticiaService {
     params = params.set('sort', 'dataPublicacao,desc');
     params = params.set('size', quantidadePorPagina);
     params = params.append('page', pagina);
+    params = params.set('nomeTag', tag);
     params = params.set('fimPeriodo', fimPeriodo);
     if (inicioPeriodo) params = params.set('inicioPeriodo', inicioPeriodo);
-    return this.http.get<PaginacaoPrevia>(`${this.API}/tag/${tag}`, { params });
+    return this.http.get<PaginacaoPrevia>(`${this.API}/tag/nomeTag`, { params });
   }
 
   buscarNoticiaPorTitulo(
